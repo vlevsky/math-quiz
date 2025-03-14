@@ -5,62 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Quiz Game</title>
     <style>
+        /* Global Styles */
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Poppins', sans-serif; 
             text-align: center; 
-            background-color: #f4f4f4; 
-            color: #333; 
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff; 
             padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
         .hidden { display: none; }
+
         button { 
-            padding: 10px 20px; 
+            padding: 12px 24px; 
             font-size: 16px; 
-            margin: 5px;
+            margin: 10px;
             border: none;
-            background-color: #28a745; 
+            background: linear-gradient(135deg, #28a745, #218838);
             color: white; 
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        button:hover { background-color: #218838; }
+
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
         input {
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            width: 200px;
+            text-align: center;
+            transition: border-color 0.3s ease;
         }
+
+        input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
         #feedback {
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        #score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .game-buttons button {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+        }
+
+        .game-buttons button:hover {
+            background: linear-gradient(135deg, #0056b3, #004080);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #c82333, #bd2130);
+        }
+
+        .download-button {
+            background: linear-gradient(135deg, #ff9800, #e68900);
+        }
+
+        .download-button:hover {
+            background: linear-gradient(135deg, #e68900, #d97700);
         }
     </style>
 </head>
 <body>
     <h1>Math Quiz Game</h1>
     <div id="menu">
-        <h2>Select a Difficulty</h2>
-        <button onclick="startGame('kindergarten')">Kindergarten</button>
-        <button onclick="startGame('easy')">Easy</button>
-        <button onclick="startGame('intermediate')">Intermediate</button>
-        <button onclick="startGame('advanced')">Advanced</button>
-        <button onclick="startGame('college')">College</button>
+        <h2>Select a Grade Level</h2>
+        <div class="menu-buttons">
+            <button onclick="startGame('kindergarten')">Kindergarten</button>
+            <button onclick="startGame('1st')">1st Grade</button>
+            <button onclick="startGame('2nd')">2nd Grade</button>
+            <button onclick="startGame('3rd')">3rd Grade</button>
+            <button onclick="startGame('4th')">4th Grade</button>
+            <button onclick="startGame('5th')">5th Grade</button>
+            <button onclick="startGame('6th')">6th Grade</button>
+            <button onclick="startGame('7th')">7th Grade</button>
+            <button onclick="startGame('8th')">8th Grade</button>
+            <button onclick="startGame('9th')">9th Grade</button>
+            <button onclick="startGame('10th')">10th Grade</button>
+            <button onclick="startGame('11th')">11th Grade</button>
+            <button onclick="startGame('12th')">12th Grade</button>
+        </div>
         <h2>or Choose a Topic</h2>
-        <button onclick="startGame('squareroots')">Squareroots</button>
-        <button onclick="startGame('simplify_fractions')">Simplify Fractions</button>
-        <button onclick="startGame('addition')">Addition</button>
-        <button onclick="startGame('subtraction')">Subtraction</button>
-        <button onclick="startGame('multiplication')">Multiplication</button>
-        <button onclick="startGame('division')">Division</button>
+        <div class="menu-buttons">
+            <button onclick="startGame('addition')">Addition</button>
+            <button onclick="startGame('subtraction')">Subtraction</button>
+            <button onclick="startGame('multiplication')">Multiplication</button>
+            <button onclick="startGame('division')">Division</button>
+            <button onclick="startGame('squareroots')">Square Roots</button>
+            <button onclick="startGame('simplify_fractions')">Simplify Fractions</button>
+        </div>
     </div>
     
     <div id="game" class="hidden">
         <h2 id="question"></h2>
         <input type="number" id="answer" placeholder="Your answer" onkeypress="handleKeyPress(event)">
-        <button onclick="checkAnswer()">Submit</button>
-        <button onclick="skipQuestion()">Skip</button>
-        <button onclick="goBack()">Back</button>
+        <div class="game-buttons">
+            <button onclick="checkAnswer()">Submit</button>
+            <button onclick="skipQuestion()">Skip</button>
+            <button class="back-button" onclick="goBack()">Back</button>
+            <button class="download-button" onclick="downloadPerformance()">Download Performance</button>
+        </div>
         <p id="feedback"></p>
         <p>Score: <span id="score">0/0</span></p>
     </div>
@@ -70,117 +166,154 @@
         let correct = 0;
         let total = 0;
         let currentLevel = '';
-        
+        let performanceData = {
+            correct: [],
+            incorrect: [],
+            skipped: []
+        };
+
         function startGame(level) {
             document.getElementById('menu').classList.add('hidden');
             document.getElementById('game').classList.remove('hidden');
             currentLevel = level;
+            performanceData = { correct: [], incorrect: [], skipped: [] }; // Reset performance data
             generateQuestion();
         }
-        
+
         function generateQuestion() {
-            let num1, num2, num3, num4, fraction1, fraction2;
-            switch (currentLevel) {
-                case 'kindergarten':
-                    num1 = Math.floor(Math.random() * 5) + 1;
-                    num2 = Math.floor(Math.random() * 5) + 1;
-                    currentAnswer = num1 + num2;
-                    document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
-                    break;
-                case 'easy':
-                    num1 = Math.floor(Math.random() * 10) + 1;
-                    num2 = Math.floor(Math.random() * 10) + 1;
-                    currentAnswer = num1 + num2;
-                    document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
-                    break;
-                case 'intermediate':
-                    num1 = Math.floor(Math.random() * 50) + 1;
-                    num2 = Math.floor(Math.random() * 50) + 1;
-                    currentAnswer = num1 * num2;
-                    document.getElementById('question').innerText = `${num1} × ${num2} = ?`;
-                    break;
-                case 'advanced':
-                    num1 = Math.floor(Math.random() * 100) + 1;
-                    num2 = Math.floor(Math.random() * 50) + 1;
-                    num3 = Math.floor(Math.random() * 10) + 1;
-                    currentAnswer = (num1 + num2) * num3;
-                    document.getElementById('question').innerText = `(${num1} + ${num2}) × ${num3} = ?`;
-                    break;
-                case 'college':
-                    num1 = Math.floor(Math.random() * 20) + 1;
-                    num2 = Math.floor(Math.random() * 10) + 1;
-                    num3 = Math.floor(Math.random() * 5) + 1;
-                    currentAnswer = Math.pow(num1, num3) / Math.sqrt(num2);
-                    document.getElementById('question').innerText = `(${num1}^${num3}) / sqrt(${num2}) = ?`;
-                    break;
-                case 'squareroots':
-                    num1 = Math.pow(Math.floor(Math.random() * 10) + 1, 2);
-                    currentAnswer = Math.sqrt(num1);
-                    document.getElementById('question').innerText = `What is the sqrt of ${num1}?`;
-                    break;
-                case 'simplify_fractions':
-                    num1 = Math.floor(Math.random() * 20) + 1;
-                    num2 = Math.floor(Math.random() * 20) + 1;
-                    currentAnswer = num1 / num2;
-                    document.getElementById('question').innerText = `Simplify the fraction: ${num1}/${num2}`;
-                    break;
+            let num1, num2, num3, operation;
+            let maxNumber = getMaxNumberForGrade(currentLevel);
+            operation = getOperationForLevel(currentLevel);
+
+            switch (operation) {
                 case 'addition':
-                    num1 = Math.floor(Math.random() * 50) + 1;
-                    num2 = Math.floor(Math.random() * 50) + 1;
+                    num1 = Math.floor(Math.random() * maxNumber) + 1;
+                    num2 = Math.floor(Math.random() * maxNumber) + 1;
                     currentAnswer = num1 + num2;
                     document.getElementById('question').innerText = `${num1} + ${num2} = ?`;
                     break;
                 case 'subtraction':
-                    num1 = Math.floor(Math.random() * 50) + 1;
+                    num1 = Math.floor(Math.random() * maxNumber) + 1;
                     num2 = Math.floor(Math.random() * num1) + 1;
                     currentAnswer = num1 - num2;
                     document.getElementById('question').innerText = `${num1} - ${num2} = ?`;
                     break;
                 case 'multiplication':
-                    num1 = Math.floor(Math.random() * 12) + 1;
-                    num2 = Math.floor(Math.random() * 12) + 1;
+                    num1 = Math.floor(Math.random() * maxNumber) + 1;
+                    num2 = Math.floor(Math.random() * maxNumber) + 1;
                     currentAnswer = num1 * num2;
                     document.getElementById('question').innerText = `${num1} × ${num2} = ?`;
                     break;
                 case 'division':
-                    num1 = Math.floor(Math.random() * 100) + 1;
+                    num1 = Math.floor(Math.random() * maxNumber) + 1;
                     num2 = Math.floor(Math.random() * 10) + 1;
-                    currentAnswer = num1 / num2;
-                    document.getElementById('question').innerText = `${num1} ÷ ${num2} = ?`;
+                    currentAnswer = (num1 / num2).toFixed(2);
+                    document.getElementById('question').innerText = `${num1} ÷ ${num2} = ? (Round to 2 decimal places)`;
+                    break;
+                case 'squareRoot':
+                    num1 = Math.pow(Math.floor(Math.random() * maxNumber) + 1, 2);
+                    currentAnswer = Math.sqrt(num1);
+                    document.getElementById('question').innerText = `√${num1} = ?`;
+                    break;
+                case 'fraction':
+                    num1 = Math.floor(Math.random() * maxNumber) + 1;
+                    num2 = Math.floor(Math.random() * maxNumber) + 1;
+                    currentAnswer = (num1 / num2).toFixed(2);
+                    document.getElementById('question').innerText = `Simplify: ${num1}/${num2} (Round to 2 decimal places)`;
                     break;
             }
         }
-        
+
+        function getMaxNumberForGrade(grade) {
+            switch (grade) {
+                case 'kindergarten': return 10;
+                case '1st': return 20;
+                case '2nd': return 50;
+                case '3rd': return 100;
+                case '4th': return 200;
+                case '5th': return 500;
+                case '6th': return 1000;
+                case '7th': return 1000;
+                case '8th': return 1000;
+                case '9th': return 1000;
+                case '10th': return 1000;
+                case '11th': return 1000;
+                case '12th': return 1000;
+                default: return 100;
+            }
+        }
+
+        function getOperationForLevel(level) {
+            if (level === 'addition') return 'addition';
+            if (level === 'subtraction') return 'subtraction';
+            if (level === 'multiplication') return 'multiplication';
+            if (level === 'division') return 'division';
+            if (level === 'squareroots') return 'squareRoot';
+            if (level === 'simplify_fractions') return 'fraction';
+
+            // For grade levels, return a random operation based on grade
+            const operations = ['addition', 'subtraction', 'multiplication', 'division', 'squareRoot', 'fraction'];
+            return operations[Math.floor(Math.random() * operations.length)];
+        }
+
         function checkAnswer() {
             let userAnswer = parseFloat(document.getElementById('answer').value);
             total++;
-            if (userAnswer === currentAnswer) {
+            if (userAnswer == currentAnswer) {
                 correct++;
-                document.getElementById('feedback').innerText = 'Correct!';
+                document.getElementById('feedback').innerText = 'Correct! 🎉';
+                performanceData.correct.push(document.getElementById('question').innerText);
             } else {
-                document.getElementById('feedback').innerText = 'Wrong! Try again.';
+                document.getElementById('feedback').innerText = `Wrong! The correct answer is ${currentAnswer}.`;
+                performanceData.incorrect.push(document.getElementById('question').innerText);
             }
             document.getElementById('score').innerText = `${correct}/${total}`;
             document.getElementById('answer').value = '';
             generateQuestion();
         }
-        
+
         function skipQuestion() {
+            performanceData.skipped.push(document.getElementById('question').innerText);
             generateQuestion();
         }
-        
+
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 checkAnswer();
             }
         }
-        
+
         function goBack() {
             document.getElementById('game').classList.add('hidden');
             document.getElementById('menu').classList.remove('hidden');
             correct = 0;
             total = 0;
             document.getElementById('score').innerText = '0/0';
+            document.getElementById('feedback').innerText = '';
+        }
+
+        function downloadPerformance() {
+            let content = `Math Quiz Performance Report\n\n`;
+            content += `Total Questions: ${total}\n`;
+            content += `Correct Answers: ${correct}\n`;
+            content += `Incorrect Answers: ${total - correct}\n`;
+            content += `Skipped Questions: ${performanceData.skipped.length}\n\n`;
+            content += `Questions You Got Wrong:\n`;
+            performanceData.incorrect.forEach((question, index) => {
+                content += `${index + 1}. ${question}\n`;
+            });
+            content += `\nQuestions You Skipped:\n`;
+            performanceData.skipped.forEach((question, index) => {
+                content += `${index + 1}. ${question}\n`;
+            });
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'math_quiz_performance.txt';
+            a.click();
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
